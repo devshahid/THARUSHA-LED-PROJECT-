@@ -28,6 +28,8 @@ int SoundSensor = A3;
 char THARUSHA= 0;
 const int threshold = 200;
 const int threshold1 = 0;
+int data;
+int callValue=0;
 
 void setup(){
   Serial.begin(9600);
@@ -39,32 +41,51 @@ void setup(){
 }
 void loop(){
   if(Serial.available()){
-    if(Serial.read()=="a"){
+    data = (int)Serial.read();
+    Serial.println(data);
+    if(data==10){
       //pattern 1
+      callValue=1;
+    }
+    else if(data==11){
+      //pattern 2
+      callValue=2;
+    }
+    else if(data==12){
+      //pattern 3
+      callValue=3;
+    }
+    else if(data==13){
+      //pattern 4
+      callValue=4;
+    }
+    else if(data==14){
+      //pattern 5
+      callValue=5;
+    }
+    else if(data==15){
+      //beats
+      callValue=6;
+    }
+  }
+  else{
+    if(callValue==1){
       showTharushaPattern(1);
     }
-    else if(Serial.read()=="b"){
-      //pattern 2
+    else if(callValue==2){
       showTharushaPattern(2);
     }
-    else if(Serial.read()=="c"){
-      //pattern 3
+    else if(callValue==3){
       showTharushaPattern(3);
     }
-    else if(Serial.read()=="d"){
-      //pattern 4
+    else if(callValue==4){
       showTharushaPattern(4);
     }
-    else if(Serial.read()=="e"){
-      //pattern 5
+    else if(callValue==5){
       showTharushaPattern(5);
     }
-    else if(Serial.read()=="f"){
-      //beats
+    else if(callValue==6){
       showTharushaPattern(6);
-    }
-    else if(Serial.read()=="g"){
-      one_by_one_all();
     }
   }
 }
@@ -191,7 +212,7 @@ void Tharusha05() {
   }
 }
 void all_on_beats(){
-  int statusSensor =analogRead(SoundSensor);
+  int statusSensor = analogRead(SoundSensor);
   bool led_Status;
   if (statusSensor>=threshold)
   {
