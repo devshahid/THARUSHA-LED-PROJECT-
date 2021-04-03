@@ -22,25 +22,27 @@
 *                           ----- TX PIN-----ARDUINO D0(RX)
 *---------------------------------------------------------
 */
-int led[15] = {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
+int led[15] = {2,3,4,5,6,7,8,9,10,11,12,13,14,15,16}; //led array
 int SoundSensor = A3;
 
 char THARUSHA= 0;
 const int threshold = 200;
 const int threshold1 = 0;
+
 int data;
-int callValue=0;
+int callValue=1;
 
 void setup(){
   Serial.begin(9600);
-  for (byte i = 0; i <15; i++) 
+  for (byte i = 0; i<15; i++) 
   {
     pinMode(led[i], OUTPUT);
   }
   pinMode(SoundSensor, INPUT); 
 }
 void loop(){
-  if(Serial.available()){
+  if(Serial.available())
+  {
     data = (int)Serial.read();
     Serial.println(data);
     if(data==10){
@@ -93,23 +95,28 @@ void showTharushaPattern(int tha){
   if(tha == 1){
     Tharusha01(HIGH);
     Tharusha01(LOW);
-  } else if(tha == 2){
+  } 
+  else if(tha == 2){
     Tharusha02();
-  } else if(tha == 3){
+  } 
+  else if(tha == 3){
     Tharusha03(HIGH);
     Tharusha03(LOW);
-  } else if(tha == 4){
+  } 
+  else if(tha == 4){
     Tharusha04();
-  } else if(tha == 5){
+  } 
+  else if(tha == 5){
     Tharusha05();
-  } else if(tha == 6){
+  } 
+  else if(tha == 6){
     all_on_beats();
   }
 }
 /*-------------------------------------------------------------------------PATTERN NO.01--------------------------------------------------------------------*/
 void Tharusha01(bool ledStatus){
   for(int i=0;i<15;i++){
-    digitalWrite(led[i], ledStatus);
+    digitalWrite(led[i], ledStatus);LOW
     Serial.println(led[i]);
     delay(100);
   }
@@ -211,6 +218,7 @@ void Tharusha05() {
     delay(50);
   }
 }
+///////////////******************PATTERN 6***************************
 void all_on_beats(){
   int statusSensor = analogRead(SoundSensor);
   bool led_Status;
